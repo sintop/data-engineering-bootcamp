@@ -1,4 +1,4 @@
-# Ref: https://cloud.google.com/bigquery/docs/samples/bigquery-load-table-gcs-csv
+"""Ref: https://cloud.google.com/bigquery/docs/samples/bigquery-load-table-gcs-csv"""
 
 import json
 import os
