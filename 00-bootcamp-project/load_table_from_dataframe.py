@@ -9,9 +9,9 @@ from google.oauth2 import service_account
 keyfile = os.environ.get("KEYFILE_PATH")
 service_account_info = json.load(open(keyfile))
 credentials = service_account.Credentials.from_service_account_info(service_account_info)
-project_id = "kinetic-genre-384501"
+PROJECT_ID = "kinetic-genre-384501"
 client = bigquery.Client(
-    project=project_id,
+    project=PROJECT_ID,
     credentials=credentials,
 )
 
@@ -45,9 +45,9 @@ def load_data_from_file(table,clustering_fields):
             ),
         )
     file_path = f"data/{table}.csv"
-    with open(file_path, "rb") as f:
-        table_id = f"{project_id}.deb_bootcamp.{table}${partition_list[table]}"
-        job = client.load_table_from_file(f, table_id, job_config=job_config)
+    with open(file_path, "rb") as files:
+        table_id = f"{PROJECT_ID}.deb_bootcamp.{table}${partition_list[table]}"
+        job = client.load_table_from_file(files, table_id, job_config=job_config)
         return job.result()
 
 def load_data_from_file_no_partition(table):
@@ -59,9 +59,9 @@ def load_data_from_file_no_partition(table):
         autodetect=True,
     )
     file_path = f"data/{table}.csv"
-    with open(file_path, "rb") as f:
-        table_id = f"{project_id}.deb_bootcamp.{table}"
-        job = client.load_table_from_file(f, table_id, job_config=job_config_non_partition)
+    with open(file_path, "rb") as files:
+        table_id = f"{PROJECT_ID}.deb_bootcamp.{table}"
+        job = client.load_table_from_file(files, table_id, job_config=job_config_non_partition)
         return job.result()
 
 res = map(load_data_from_file,list(partition_list.keys()),custer_list)
