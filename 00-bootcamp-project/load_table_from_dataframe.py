@@ -20,7 +20,7 @@ no_partition_list = ["addresses","order_items","products","promos"]
 custer_list = [[],[],["first_name", "last_name"]]
 
 def load_data_from_file(table,clustering_fields):
-    """test"""
+    """load data from file with partition and custering"""
     if clustering_fields:
         job_config = bigquery.LoadJobConfig(
             skip_leading_rows=1,
@@ -49,8 +49,9 @@ def load_data_from_file(table,clustering_fields):
         table_id = f"{project_id}.deb_bootcamp.{table}${partition_list[table]}"
         job = client.load_table_from_file(f, table_id, job_config=job_config)
         return job.result()
+
 def load_data_from_file_no_partition(table):
-    """test"""
+    """load data from file"""
     job_config_non_partition = bigquery.LoadJobConfig(
         skip_leading_rows=1,
         write_disposition=bigquery.WriteDisposition.WRITE_TRUNCATE,
@@ -62,6 +63,7 @@ def load_data_from_file_no_partition(table):
         table_id = f"{project_id}.deb_bootcamp.{table}"
         job = client.load_table_from_file(f, table_id, job_config=job_config_non_partition)
         return job.result()
+
 res = map(load_data_from_file,list(partition_list.keys()),custer_list)
 print(list(res))
 
