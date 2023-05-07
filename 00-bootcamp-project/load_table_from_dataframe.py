@@ -7,7 +7,7 @@ from google.cloud import bigquery
 from google.oauth2 import service_account
 
 keyfile = os.environ.get("KEYFILE_PATH")
-service_account_info = json.load(open(keyfile))
+service_account_info = json.load(open(keyfile,encoding="utf-8"))
 credentials = service_account.Credentials.from_service_account_info(service_account_info)
 PROJECT_ID = "kinetic-genre-384501"
 client = bigquery.Client(
