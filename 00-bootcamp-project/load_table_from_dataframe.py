@@ -20,6 +20,7 @@ client = bigquery.Client(
 
 job_config = bigquery.LoadJobConfig(
     write_disposition=bigquery.WriteDisposition.WRITE_TRUNCATE,
+    autodetect=True,
     # schema=[
     #     bigquery.SchemaField("user_id", bigquery.SqlTypeNames.STRING),
     #     bigquery.SchemaField("first_name", bigquery.SqlTypeNames.STRING),
@@ -39,11 +40,11 @@ job_config = bigquery.LoadJobConfig(
 
 for filename in os.listdir('data'):
     print(filename)
-    file_path = "data/" + filename
+    file_path = "data/{}".format(filename)
     df = pd.read_csv(file_path)
     df.info()
 
-    table_id = f"{project_id}.deb_bootcamp." + filename.split(".")[0]
+    table_id = "{}.deb_bootcamp.{}".format(project_id,filename.split(".")[0]) 
     job = client.load_table_from_dataframe(df, table_id, job_config=job_config)
     job.result()
 
