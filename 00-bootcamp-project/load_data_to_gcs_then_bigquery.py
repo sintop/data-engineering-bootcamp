@@ -118,7 +118,10 @@ def upload_file_csv_to_gcs(filename):
         print("filename : ", filename)
         file_path = f"{DATA_FOLDER}/{filename}"
         print("file_path : ", file_path)
-        destination_blob_name = f"{BUSINESS_DOMAIN}/{filename.split('.')[0]}/{filename}"
+        if filename.split(".")[0] in partition_list.keys():
+            destination_blob_name = f"{BUSINESS_DOMAIN}/{filename.split('.')[0]}/{partition_list[filename.split('.')[0]]}/{filename}"
+        else:
+            destination_blob_name = f"{BUSINESS_DOMAIN}/{filename.split('.')[0]}/{filename}"
         print("destination_blob_name : ", destination_blob_name)
         blob = bucket.blob(destination_blob_name)
         blob.upload_from_filename(file_path)
