@@ -1,0 +1,21 @@
+networkrail:
+  target: dev
+
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: kinetic-genre-384501
+      dataset: networkrail
+      threads: 1
+      keyfile: D:\project\data-engineering-bootcamp\07-end-to-end-project\dags\kinetic-genre-384501-9d633532a56c.json
+      location: asia-southeast1
+
+    prod:
+      type: bigquery
+      method: service-account
+      project: kinetic-genre-384501
+      dataset: networkrail
+      threads: 1
+      keyfile: D:\project\data-engineering-bootcamp\07-end-to-end-project\dags\kinetic-genre-384501-9d633532a56c.json
+      location: asia-southeast1

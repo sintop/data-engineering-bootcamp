@@ -1,0 +1,18 @@
+version: 2
+
+exposures:
+
+  - name: networkrail_train_movement_data
+    label: Network Rail Train Movement Data
+    type: dashboard
+    maturity: high
+    url: https://lookerstudio.google.com/u/0/reporting/ac7af033-bbcc-4bb2-b0a2-9ac9eea5a5f9/page/jJ6RD # Change to your dashboard's URL
+    description: >
+      Network Rail Train Movement Data
+
+    depends_on:
+      - ref('fct_movements')
+
+    owner:
+      name: Sintop Seenoul  # Change to your name
+      email: sintop.seenoul@gmail.com  # Change to your email
