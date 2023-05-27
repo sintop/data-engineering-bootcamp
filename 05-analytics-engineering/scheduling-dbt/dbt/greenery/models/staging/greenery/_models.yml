@@ -1,0 +1,63 @@
+version: 2
+
+models:
+
+  - name: stg_greenery__users
+    description: Greenery users
+    columns:
+      - name: user_guid
+        description: User GUID
+  
+  - name: stg_greenery__orders
+    description: Greenery orders
+    columns:
+      - name: order_guid
+        description: Order GUID
+
+  - name: stg_greenery__addresses
+    description: Greenery addresses
+    columns:
+      - name: address_guid
+        description: Address GUID
+
+  - name: stg_greenery__products
+    description: Greenery products
+    columns:
+      - name: product_guid
+        description: Products GUID
+
+  - name: stg_greenery__order_items
+    description: Greenery order_items
+    columns:
+      - name: order_guid
+        description: Orders GUID
+
+  - name: stg_greenery__promos
+    description: Greenery promos
+    columns:
+      - name: promo_guid
+        description: Promos GUID
+
+  - name: stg_greenery__events
+    description: Greenery events
+    columns:
+      - name: event_guid
+        description: Event GUID
+        tests:
+          - not_null
+          - unique
+          - dbt_expectations.expect_column_to_exist
+          - dbt_expectations.expect_column_values_to_be_unique
+      - name: event_type
+        description: Event Type
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: string
+          - accepted_values:
+              values: ['page_view', 'add_to_cart', 'checkout', 'package_shipped']
+      - name: user_guid
+        description: User GUID
+        tests:
+          - relationships:
+              to: ref('users')
+              field: user_guid
